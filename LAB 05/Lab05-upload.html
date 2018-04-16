@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Upload</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-6 text-center">
+                <section>
+                    <h1>Share Your Travels</h1>
+                    <p><i>Let us know where you've been</i></p>
+                </section>
+            </div>
+            <div class="col-md-6">
+                <ul class="nav nav-justified">
+                    <div class="col-md">
+                        <li class="nav-item">
+                            <a href="Lab05-gallery.html" class="nav-link disabled">Gellery</a></li>
+                    </div>
+                    <div class="col-md">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link disabled">Related Photos</a></li>
+                    </div>
+                    <div class="col-md">
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#"> Reviews</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="card">
+        <div class="card-body">
+            <form action="http://www.randyconnolly.com/tests/process.php " method="post">
+
+                <div class="form-group">
+
+                    <legend>PHOTO DETAILS</legend>
+                    <p>Title</p>
+                    <input type="text"
+                           placeholder="Give your photo a descriptive name"
+                           class="form-control">
+                    <p>Description</p>
+                    <textarea
+                            class="form-control"
+                            placeholder="Adding a rich description will help with search results"></textarea>
+
+
+                    <p>Continent</p>
+                    <select class="form-control">
+                        <option>Choose continent</option>
+                    </select>
+                    <p>Country</p>
+                    <select class="form-control">
+                        <option>Choose country</option>
+                    </select>
+                    <p>City</p>
+                    <input class="form-control" type="text" name="city">
+
+                    <p>Copyright?</p>
+                    <div>
+                        <input type="radio" name="a">All rights reserved
+                    </div>
+                    <input type="radio" name="a">Creative
+
+                </div>
+
+                <div>
+                    <p>Creative Commons Types</p>
+                    <p><input type="checkbox" name="cct">Attribution
+                        <input type="checkbox" name="cct">Noncommercial
+                        <input type="checkbox" name="cct">No Derivative Works</p>
+                </div>
+
+<br>
+                <div>
+                    <p><input type="checkbox" name="ia">I accept the software a license </p>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <p>Rate this photo:</p>
+                        <input class="form-control" type="number" >
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-7 form-group">
+                        <p>Color Collection:</p>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+
+
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <p>Date Taken:</p>
+                            <input class="form-control" type="text">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 form-group">
+                            <p>Time Taken:</p>
+                            <input class="form-control" type="text">
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
