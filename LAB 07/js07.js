@@ -1,246 +1,241 @@
 //设置初始值
-let del = document.getElementById("del");
-let old = document.getElementById("old");
-let colsAttrinput = [];
-let row = document.getElementById("row");
-let setAttr = document.getElementsByClassName("setAttr");
-let columnsInput = [];
-let tables = [];//储存表格
-let setname = document.getElementById("setname");
-let setnum = document.getElementById("setnum");
-let select2 = document.getElementById("select2");
-let bgTable = document.getElementById("bgTable");
-let col = document.getElementById("col");
-let commit = document.getElementById("commit");
-let creatOP = document.getElementById("creatOP");
-let creatTB = document.getElementById("creatTB");
 let select1 = document.getElementById("select1");
+let select2 = document.getElementById("select2");
+let main = document.getElementById("main");
+let bgTable = document.getElementById("bgTable");
+let commit = document.getElementById("commit");
+let tables = [];
+
+
+//设置表格类，定义属性
+class Table {
+    constructor(name, attr) {
+        this.name = name;
+        this.attr = attr;
+        this.tableContent = [];
+    }
+}
 
 //下拉框事件
 select1.onchange = function () {
-
-    switch (select1.value) {
-        case "SELECT ONE":
-            bgTable.innerHTML = "";
-            row.innerHTML = "";
-            col.innerHTML = "";
-            creatTB.style.display = "none";
-            commit.style.display = "none";
-            old.selected = true;
-            break;
-        case "CREATE TABLE":
-            del.innerHTML = "";
-            row.innerHTML = "";
-            creatTB.style.display = "block";
-            creatOP.style.display = "block";
-            break;
-
-
-        case "ADD ROW":
-            del.innerHTML = "";
-            row.innerHTML = "";
-            creatTB.style.display = "none";
-            let number = 0;
-            if (select2.value != "Select")
-                number = tables[select2.value].getElementsByTagName("th").length;
-            else {
-                return;
-            }
-            let ths = tables[select2.value].getElementsByTagName("th");
-
-
-            for (let i = 0; i < number; i++) {
-                columnsInput[i] = document.createElement("input");
-                columnsInput[i].type = "text";
-                columnsInput[i].placeholder = ths[i] ? ths[i].innerHTML : "Attribute";
-                row.appendChild(columnsInput[i]);
-            }
-            break;
-        case"DELETE ROW":
-            del.innerHTML = "";
-            row.innerHTML = "";
-            creatTB.style.display = "none";
-            let numberd = 0;
-            if (select2.value != "Select")
-                numberd = tables[select2.value].getElementsByTagName("th").length;
-            else {
-                return;
-            }
-            let thsd = tables[select2.value].getElementsByTagName("th");
-            for (let i = 0; i < numberd; i++) {
-                columnsInput[i] = document.createElement("input");
-                columnsInput[i].type = "text";
-                columnsInput[i].placeholder = thsd[i] ? thsd[i].innerHTML : "Attribute";
-                del.appendChild(columnsInput[i]);
-            }
-
-            break;
-        case"DELETE TABLE":
-            bgTable.innerHTML = "";
-            row.innerHTML = "";
-            col.innerHTML = "";
-            creatTB.style.display = "none";
-            commit.style.display = "none";
-            window.alert("You can not ");
-            break;
-
-    }
-}
-
-setnum.onchange = function () {
-    col.innerHTML = "";
-    let cols = this.value;
-    if (cols > 0) {
-        commit.style.display = "block";
-        for (i = 0; i < cols; i++) {
-            let input = document.createElement("input");
-            input.type = "text";
-            input.placeholder = "Attribute";
-            input.id = "Attr" + i;
-            col.appendChild(input);
-
-        }
-    }
-}
-
-
-commit.onclick = function () {
-    switch (select1.value) {
-        case "CREATE TABLE":
-            let colsInput = [];//储存输入框信息
-            for (let i = 0; i < parseInt(setnum.value); i++) {
-                let ids = "Attr" + i;
-
-                colsInput[i] = document.getElementById(ids).value;
-            }
-            colsAttrinput[setname.value] = colsInput;
-            addOption(setname.value);
-            tables[setname.value] = document.createElement("table");
-            let thead = document.createElement("thead");
-            for (let i = 0; i < parseInt(setnum.value); i++) {
-                let th = document.createElement("th");
-                th.innerHTML = colsInput[i] || "Attribute";
-                thead.appendChild(th);
-            }
-
-            tables[setname.value].appendChild(thead);
-            showTable(tables[setname.value]);
-            break;
-        case"ADD ROW":
-            let number = 0;
-            if (select2.value != "Select")
-                number = tables[select2.value].getElementsByTagName("th").length;
-            else {
-                return;
-            }
-            let tr = document.createElement("tr");
-            for (let i = 0; i < number; i++) {
-                let td = document.createElement("td");
-                if (columnsInput[i].value != null) {
-                    td.innerHTML = columnsInput[i].value;
-                }
-                else {
-                    td.innerHTML = "";
-                }
-                tr.appendChild(td);
-            }
-            tables[select2.value].appendChild(tr);
-            showTable(tables[select2.value]);
-
-
-            break;
-        case "DELETE ROW":
-
-            let numberd = 0;
-            if (select2.value != "Select")
-                numberd = tables[select2.value].getElementsByTagName("tr").length;
-            else {
-                return;
-            }
-
-            let names = [];
-
-            for (let i = 0; i < columnsInput.length; i++) {
-                if (columnsInput[i].value != null)
-                    names[i] = columnsInput[i].value;
-                else names[i] = "";
-            }
-            let trs = tables[select2.value].getElementsByTagName("tr");
-            for (let i = 0; i < numberd; i++) {
-                let check = false;
-                let tds = [];
-                tds = trs[i].getElementsByTagName("td");
-                let nums = tds.length;
-                for (let i = 0; i < nums; i++) {
-                    if ((names[i] == tds[i].innerHTML) || (names[i] = "")) {
-                        check = true;
-                    }
-                    else {
-                        check = false;
-                        break;
-                    }
-
-                }
-                if (check) {
-                    tables[select2.value].removeChild(trs[i]);
-
-                }
-            }
-            showTable(tables[select2.value]);
-            break;
-
-        case "DELETE TABLE":
-            let options = select2.getElementsByTagName("option");
-
-            for (let option of options) {
-                if (option.selected) {
-                    if (option.value == "Select") {
-                        return;
-                    }
-                    else {
-                        select2.removeChild(option);
-                        tables[option.value] = null;
-                        bgTable = "";
-                        if (select2.getElementsByTagName("option")[1]) {
-                            select2.getElementsByTagName("option")[1].selected = true;
-                            showTable(tables[select2.getElementsByTagName("option")[1].value]);
-                        }
-                        else{
-                            select2.old.selected=true;
-                        }
-
-                    }
-
-                }
-            }
-            break;
-
-
-    }
-}
-
-//在第二个下拉框添加选项并选中
-function addOption(optionValue) {
-    let option = document.createElement("option");
-    select2.appendChild(option);
-    option.innerHTML = optionValue;
-    option.value = optionValue;
-    option.selected = true;
-}
-
-function showTable(table) {
-    if (bgTable.firstChild) {
-        bgTable.removeChild(bgTable.firstChild);
-    }
-
-
-    if (!(select2.value == "Select")) {
-        bgTable.appendChild(table);
-    }
+    changeAction();
 }
 
 select2.onchange = function () {
-    showTable(tables[this.value]);
-
+    changeTable();
+    changeAction();
 }
 
+function changeAction() {
+    //清空内容
+    main.innerHTML = "";
+//五种情况
+    switch (select1.selectedIndex) {
+        case 0:
+            commit.style.display = "none";
+            break;
+        case 1:
+            commit.style.display = "none";
+            createTable();
+            break;
+        case 2:
+            commit.style.display = "none";
+            addRow();
+            break;
+        case 3:
+            deleteRow();
+            break;
+        case 4:
+            deleteTable();
+            break;
+    }
+}
+
+function createTable() {
+    //设置名字和数量
+    let inputName = document.createElement("input");
+    inputName.type = "text";
+    inputName.placeholder = "Set Name";
+    main.appendChild(inputName);
+
+    let inputNumber = document.createElement("input");
+    inputNumber.type = "number";
+    inputNumber.placeholder = "Set Number";
+    main.appendChild(inputNumber);
+//属性值
+    let attrBox = document.createElement("div");
+    main.appendChild(attrBox);
+
+    inputNumber.onchange = function () {
+        attrBox.innerHTML = "";
+        if (inputNumber.value > 0) {
+
+            for (let i = 0; i < inputNumber.value; i++) {
+                let inputAttr = document.createElement("input");
+                inputAttr.type = "text";
+                inputAttr.placeholder = "Attribute";
+                inputAttr.className = "inputAttr";
+                attrBox.appendChild(inputAttr);
+            }
+            commit.style.display = "block";
+        }
+    }
+
+    commit.onclick = function () {
+        let newTable = document.createElement("option");
+        select2.appendChild(newTable);
+
+        let attr = [];
+        let attrList = document.getElementsByClassName("inputAttr");
+        for (let i = 0; i < inputNumber.value; i++) {
+            attr[i] = attrList[i].value;
+        }
+        //设置第x个table
+        tables[newTable.index] = new Table(inputName.value, attr);
+
+        newTable.innerHTML = tables[newTable.index].name;
+        newTable.selected = true;
+
+        changeTable();
+    }
+}
+
+//改变并显示table
+function changeTable() {
+    bgTable.innerHTML = "";
+    let index = select2.selectedIndex;
+    if (index === 0) {
+        return;
+        //select的情况
+    }
+//设置表头
+    let table = document.createElement("table");
+    let rowHead = document.createElement("tr");
+    for (let i = 0; i < tables[index].attr.length; i++) {
+        if (tables[index].attr[i] !== "") {
+            let tableHead = document.createElement("th");
+            tableHead.innerHTML = tables[index].attr[i];
+            rowHead.appendChild(tableHead);
+        }
+    }
+    table.appendChild(rowHead);
+
+    for (let rowNum = 0; rowNum < tables[index].tableContent.length; rowNum++) {
+        let tableRow = document.createElement("tr");
+
+        for (let colNum = 0; colNum < tables[index].attr.length; colNum++) {
+            let tableCell = document.createElement("td");
+            tableCell.innerHTML = tables[index].tableContent[rowNum][colNum];
+            tableRow.appendChild(tableCell);
+        }
+        table.appendChild(tableRow);
+    }
+
+    bgTable.appendChild(table);
+}
+
+
+function addRow() {
+    let index = select2.selectedIndex;
+    if (index === 0) {
+        commit.style.display = "none";
+        return;
+    }
+
+    let currentTable = tables[index];
+    let attrBox = document.createElement("div");
+    main.appendChild(attrBox);
+    for (let i = 0; i < currentTable.attr.length; i++) {
+        let inputAttr = document.createElement("input");
+        inputAttr.type = "text";
+        inputAttr.placeholder = currentTable.attr[i];
+        inputAttr.className = "inputAttr";
+        attrBox.appendChild(inputAttr);
+    }
+    commit.style.display = "block";
+
+    commit.onclick = function () {
+        let newRow = [];
+        let attrList = document.getElementsByClassName("inputAttr");
+        for (let i = 0; i < currentTable.attr.length; i++) {
+            newRow[i] = attrList[i].value;
+        }
+        currentTable.tableContent.push(newRow);
+
+        changeTable();
+    }
+}
+
+function deleteRow() {
+    let index = select2.selectedIndex;
+    if (index === 0) {
+        commit.style.display = "none";
+        return;
+    }
+
+    let currentTable = tables[index];
+    let attrBox = document.createElement("div");
+    main.appendChild(attrBox);
+    for (let i = 0; i < currentTable.attr.length; i++) {
+        let inputAttr = document.createElement("input");
+        inputAttr.type = "text";
+        inputAttr.placeholder = "Attr" + (i + 1);
+        inputAttr.className = "inputAttr";
+        attrBox.appendChild(inputAttr);
+        commit.style.display = "block";
+    }
+
+    commit.onclick = function () {
+        let attrList = document.getElementsByClassName("inputAttr");
+        for (let rowNum = 0; rowNum < currentTable.tableContent.length; rowNum++) {
+            let colNum = 0;
+            for (; colNum < currentTable.attr.length; colNum++) {
+                if (attrList[colNum].value !== "" &&
+                    currentTable.tableContent[rowNum][colNum] !== attrList[colNum].value) {
+                    break;
+                }
+            }
+            if (colNum === currentTable.attr.length) {
+                currentTable.tableContent[rowNum] = null;
+            }
+        }
+//赋值
+        let newTableContent = [];
+        for (let rowNum = 0; rowNum < currentTable.tableContent.length; rowNum++) {
+            if (currentTable.tableContent[rowNum] !== null) {
+                newTableContent.push(currentTable.tableContent[rowNum]);
+            }
+        }
+        currentTable.tableContent = newTableContent;
+
+        changeTable();
+    }
+}
+
+function deleteTable() {
+    let index = select2.selectedIndex;
+    if (index === 0) {
+        commit.style.display = "none";
+        return;
+    }
+
+    let warningBox = document.createElement("div");
+    warningBox.innerHTML = "<p>WARNING: You cannot undo this action!</p>";
+    main.appendChild(warningBox);
+    commit.style.display = "block";
+
+    commit.onclick = function () {
+        index = select2.selectedIndex;
+        tables.splice(index, 1);
+        select2.removeChild(select2.options[index]);
+        if (select2.options.length === 1) {
+            select2.options[0].selected = true;
+            commit.style.display = "none";
+            main.innerHTML = "";
+        }
+        else {
+            select2.options[1].selected = true;
+        }
+        changeTable();
+    }
+}
