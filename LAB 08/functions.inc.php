@@ -10,6 +10,7 @@ function generateLink($url, $label, $class) {
 
 function outputPostRow($number)  {
      include("travel-data.inc.php");
+
       $postLink = 'post.php?id=' . ${"postId" . $number};
       $image = '<img src="images/' . ${"thumb" . $number} . '" alt="' . ${"title" . $number} . '" class="img-responsive"/>';
       $user = utf8_encode(${"userName" . $number});
